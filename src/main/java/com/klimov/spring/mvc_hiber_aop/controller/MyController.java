@@ -2,6 +2,8 @@ package com.klimov.spring.mvc_hiber_aop.controller;
 
 import com.klimov.spring.mvc_hiber_aop.entity.Employee;
 import com.klimov.spring.mvc_hiber_aop.service.EmployeeService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,18 @@ public class MyController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    private static final Logger logger = LogManager.getLogger(MyController.class);
+
+    @GetMapping("/log")
+    public String logMessage() {
+        logger.info("INFO: Это сообщение попадёт в Tomcat localhost.log");
+        logger.warn("WARNING: Это предупреждение в Tomcat localhost.log");
+        logger.error("ERROR: Ошибка записана в Tomcat localhost.log");
+        System.out.println("Я здесь был");
+        System.out.println(System.getProperty("user.dir"));
+        return "Лог записан!";
+    }
 
     @GetMapping("/")
     public String showAllEmployees(Model model) {
